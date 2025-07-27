@@ -76,13 +76,13 @@ const AdminDashboard = () => {
   }, [feedbacks, filterCourse, sortOrder]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 pt-28 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl p-8">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
           <h1 className="text-4xl font-extrabold text-blue-800 text-center sm:text-left">
             Admin Dashboard
           </h1>
-          <button
+          {/* <button
             onClick={() => {
               localStorage.removeItem('adminToken');
               navigate('/admin/login');
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
             className="bg-red-600 hover:bg-red-700 text-white font-medium px-6 py-3 rounded-lg shadow-md transition duration-300"
           >
             Logout
-          </button>
+          </button> */}
         </div>
 
         <div className="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -135,54 +135,66 @@ const AdminDashboard = () => {
             No feedback matching your criteria.
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredAndSortedFeedbacks.map((item) => (
-              <div
-                key={item._id}
-                className="bg-white border border-blue-100 rounded-lg p-6 shadow-md hover:shadow-lg transition-transform transform hover:-translate-y-1 flex flex-col"
-              >
-                <div className="flex justify-between items-start mb-3">
-                  <h3 className="text-xl font-bold text-blue-700">{item.name}</h3>
-                  <div className="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">
-                    {item.course}
-                  </div>
-                </div>
-                <p className="text-sm text-gray-600 mb-2">{item.email}</p>
-
-                <div className="flex items-center text-gray-700 mb-3">
-                  <span className="font-semibold mr-2">Rating:</span>
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <svg
-                        key={i}
-                        className={`h-5 w-5 ${i < item.rating ? 'text-yellow-400' : 'text-gray-300'}`}
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
+          <div className="overflow-auto rounded-lg shadow border border-gray-200">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-blue-100">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                    Course
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                    Rating
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                    Comments
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                    Submitted At
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-semibold text-blue-800 uppercase tracking-wider">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredAndSortedFeedbacks.map((item) => (
+                  <tr key={item._id} className="hover:bg-blue-50 transition">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                      {item.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      {item.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-700 font-semibold">
+                      {item.course}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-yellow-600 font-semibold">
+                      {item.rating}/5
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                      {item.comments}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-500">
+                      {new Date(item.createdAt).toLocaleString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm">
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="text-red-600 hover:text-red-800 font-semibold"
                       >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                      </svg>
-                    ))}
-                  </div>
-                  <span className="ml-2 text-blue-600 font-bold">{item.rating}/5</span>
-                </div>
-
-                <p className="text-gray-800 leading-relaxed mb-4 flex-grow">
-                  <span className="font-semibold">Comments:</span> {item.comments}
-                </p>
-
-                <div className="flex justify-between items-center mt-auto">
-                  <p className="text-xs text-gray-500">
-                    Submitted: {new Date(item.createdAt).toLocaleString()}
-                  </p>
-                  <button
-                    onClick={() => handleDelete(item._id)}
-                    className="text-red-600 hover:text-red-800 text-sm font-semibold"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
