@@ -1,23 +1,27 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Navbar from './components/Navbar'; // Optional — keep if you still want a navbar
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AdminLoginPage from "./pages/AdminLoginPage";
+import AdminDashboard from "./pages/AdminDashboardPage";
+import FeedBackPage from "./Pages/FeedBackPage";
+import NavBarPage from "./Pages/NavBarPage";
+import ThankyouPage from "./Pages/ThankyouPage";
 
-const App = () => {
+function App() {
   return (
     <Router>
-      <Navbar />
-      <div className="">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          {/* Default redirect to login */}
-          <Route path="/" element={<Navigate to="/login" />} />
-        </Routes>
-      </div>
+      {/* NavBar visible on all pages */}
+      <NavBarPage />
+
+      <Routes>
+        {/* Admin */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+
+        {/* Public */}
+        <Route path="/" element={<FeedBackPage />} />
+        <Route path="/thankyou" element={<ThankyouPage />} />
+      </Routes>
     </Router>
   );
-};
+}
 
 export default App;
