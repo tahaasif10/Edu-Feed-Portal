@@ -36,7 +36,7 @@ const AdminLoginForm = () => {
       <form
         onSubmit={handleLogin}
         className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-7 border border-blue-200 transform hover:scale-[1.01] transition-transform duration-300 ease-in-out"
-      >
+        >
         <h2 className="text-4xl font-bold text-center text-gray-900 mb-6">
           Admin Login
         </h2>

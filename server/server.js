@@ -1,11 +1,14 @@
-// server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
-const FeedRoute = require("./routes/feedbackRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
 const authRoutes = require("./routes/authRoutes");
+const studentAuthRoutes = require("./routes/studentAuthRoutes");
+const studentRoutes = require("./routes/studentRoutes");
+const courseRoutes = require("./routes/courseRoutes");
+const teacherRatingsRoutes = require("./routes/teacherRatingsRoutes"); // NEW
 
 dotenv.config();
 
@@ -13,15 +16,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/auth", authRoutes); // Login route
-app.use("/api/feedback", FeedRoute); // Feedback routes
+// Routes
+app.use("/auth", authRoutes);
+app.use("/auth", studentAuthRoutes);
+app.use("/api/feedback", feedbackRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/courses", courseRoutes); // NEW
+app.use("/api/teacher-ratings", teacherRatingsRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Student Management System API is running");
+  res.send("Feedback Management System API is running");
 });
 
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/student-management", {
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/feedback", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

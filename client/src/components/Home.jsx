@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap, Shield } from 'lucide-react'; // lucide icons
+import { GraduationCap, Shield, TrendingUp } from 'lucide-react';
 
 const Home = () => {
   const navigate = useNavigate();
 
   const handleSelection = (role) => {
     if (role === 'student') {
-      navigate('/feedbackpage');
+      navigate('/student/login'); // Changed from /feedbackpage
     } else if (role === 'admin') {
       navigate('/admin/login');
     }
