@@ -1,4 +1,4 @@
-# Feedback Management System
+# EduFeed Portal
 
 A full-stack MERN application for managing student feedback and teacher ratings.
 
